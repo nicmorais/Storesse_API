@@ -5,8 +5,12 @@ defmodule StoresseApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug StoresseApiWeb.Auth.Pipeline
+  end
+
   scope "/api", StoresseApiWeb do
-    pipe_through :api
+    pipe_through [:api, :auth]
     resources "/customers", CustomerController, except: [:new, :edit] do
       resources "/sales", SaleController, except: [:new, :edit] do
         resources "/sale_products", SaleProductController, except: [:new, :edit]
@@ -24,7 +28,11 @@ defmodule StoresseApiWeb.Router do
       end
     end
   end
-
+  
+  scope "/api", StoresseApiWeb do
+    pipe_through :api
+    post "/users/signin", UserController, :signin
+  end
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put

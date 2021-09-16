@@ -29,3 +29,7 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+config :storesse_api, StoresseApiWeb.Auth.Guardian,
+  issuer: "storesse_api",
+  secret_key: "LYH5yy0qtOaM1gS24sudtJgiq0Lxent2/JANhQfSJ6MihWDc++x2ywAvyiGQv7w/"

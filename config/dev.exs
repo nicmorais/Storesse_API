@@ -3,13 +3,13 @@ use Mix.Config
 # Configure your database
 config :storesse_api, StoresseApi.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "esqueci",
   database: "storesse_api_dev",
-  hostname: "localhost",
+  hostname: "192.168.31.184",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-config :storesse_api, StoresseApi.Repo, migration_timestamps: [type: :timestamptz]
+#config :storesse_api, StoresseApi.Repo, migration_timestamps: [type: :timestamptz]
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
