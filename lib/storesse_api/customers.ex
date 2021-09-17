@@ -35,12 +35,6 @@ defmodule StoresseApi.Customers do
       ** (Ecto.NoResultsError)
 
   """
-#  defp customer_with_state_query(id) do
-#    from c in Customer, 
-#      where c.id == ^id
- #     preload: [state: ^state_query()]
-#  end
-  
   
   def get_customer!(id) do
      Customer
@@ -50,7 +44,7 @@ defmodule StoresseApi.Customers do
   def get_customer_with_sales!(id) do
      Customer
      |> Repo.get!(id)
-     |> Repo.preload(:state)
+     |> Repo.preload(:sale)
   end
   
   @doc """

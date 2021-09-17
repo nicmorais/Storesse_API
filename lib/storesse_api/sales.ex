@@ -42,6 +42,7 @@ defmodule StoresseApi.Sales do
     Sale
     |> Repo.get!(id)
     |> Repo.preload(:customer)
+    |> Repo.preload(:sale_products)
   end
   
     def get_sale_with_products!(id) do

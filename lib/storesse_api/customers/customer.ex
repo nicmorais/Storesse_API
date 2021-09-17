@@ -1,7 +1,7 @@
 defmodule StoresseApi.Customers.Customer do
   use Ecto.Schema
   import Ecto.Changeset
-  alias StoresseApi.States.State
+  alias StoresseApi.Cities.City
   alias StoresseApi.Sales.Sale
   
   schema "customers" do
@@ -14,7 +14,7 @@ defmodule StoresseApi.Customers.Customer do
     field :password_hash, :string
     field :name, :string
     field :zip_code, :string
-    belongs_to(:state, State)
+    belongs_to(:city, City)
     has_many(:sales, Sale)
 
     timestamps()

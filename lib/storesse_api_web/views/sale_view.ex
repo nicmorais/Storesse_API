@@ -9,7 +9,7 @@ defmodule StoresseApiWeb.SaleView do
   end
 
   def render("show.json", %{sale: sale}) do
-    %{data: render_one(sale, SaleView, "sale_with_products.json")}
+    %{data: render_one(sale, SaleView, "show_sale_with_products.json")}
   end
 
   def render("sale.json", %{sale: sale}) do
@@ -21,7 +21,18 @@ defmodule StoresseApiWeb.SaleView do
 
   def render("show_sale_with_products.json", %{sale: sale}) do
     %{id: sale.id,
+      amount: sale.amount,
+      discount: sale.discount,
       customer: render_one(sale.customer, CustomerView, "customer.json"),
-      products: render_many(sale.sale_products, SaleProductView, "sale_product.json")}
+      sale_products: render_many(sale.sale_products, SaleProductView, "sale_product.json")
+     }
   end
+  
+  defimpl Poison.Encoder, for: Decimal do
+  def encode(decimal, options) do
+     Decimal.to_string(decimal, :normal)
+    |> Poison.Encoder.encode(options)
+  end
+end
+
 end

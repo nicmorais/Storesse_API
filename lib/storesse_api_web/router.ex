@@ -10,7 +10,7 @@ defmodule StoresseApiWeb.Router do
   end
 
   scope "/api", StoresseApiWeb do
-    pipe_through [:api, :auth]
+    pipe_through :api
     resources "/customers", CustomerController, except: [:new, :edit] do
       resources "/sales", SaleController, except: [:new, :edit] do
         resources "/sale_products", SaleProductController, except: [:new, :edit]

@@ -23,11 +23,10 @@ def index(conn, %{"sale_id" => sale_id}) do
     end
   end
 
-#  def show(conn, %{"id" => id}) do
-#    sale = Sales.get_sale_with_customer_and_products!(id)
-    #render(conn, "show.json", sale: sale)
-#    render(conn, "sale.json", sale: sale)
-#  end
+  def show(conn, %{"id" => id}) do
+    sale = Sales.get_sale!(id)
+    render(conn, "show.json", sale: sale)
+  end
 
   def update(conn, %{"id" => id, "sale" => sale_params}) do
     sale = Sales.get_sale!(id)

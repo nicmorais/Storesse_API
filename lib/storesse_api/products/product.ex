@@ -3,7 +3,7 @@ defmodule StoresseApi.Products.Product do
   import Ecto.Changeset
 
   schema "products" do
-    field :active, :boolean, default: false
+    field :active, :boolean, default: true
     field :cost, :decimal
     field :name, :string
     field :price, :decimal

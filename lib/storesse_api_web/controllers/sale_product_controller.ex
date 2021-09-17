@@ -7,7 +7,6 @@ defmodule StoresseApiWeb.SaleProductController do
 
   action_fallback StoresseApiWeb.FallbackController
 
-#  def index(conn, _params) do
   def index(conn, %{"sale_id" => sale_id}) do
     #sale_products = SaleProducts.list_sale_products()
     sale_products = SaleProducts.get_sale_products_for_sale!(sale_id)

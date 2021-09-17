@@ -3,9 +3,9 @@ use Mix.Config
 # Configure your database
 config :storesse_api, StoresseApi.Repo,
   username: "postgres",
-  password: "esqueci",
+  password: "postgres",
   database: "storesse_api_dev",
-  hostname: "192.168.31.184",
+  hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
