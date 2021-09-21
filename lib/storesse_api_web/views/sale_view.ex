@@ -16,7 +16,9 @@ defmodule StoresseApiWeb.SaleView do
     %{id: sale.id,
       amount: sale.amount,
       discount: sale.discount,
-      customer_id: sale.customer_id}
+      customer_name: sale.customer.name,
+      customer_id: sale.customer.id
+      }
   end
 
   def render("show_sale_with_products.json", %{sale: sale}) do

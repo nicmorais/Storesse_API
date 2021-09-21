@@ -3,14 +3,14 @@ defmodule StoresseApiWeb.SaleController do
 
   alias StoresseApi.Sales
   alias StoresseApi.Sales.Sale
-
+  alias StoresseApi.Repo
+  
   action_fallback StoresseApiWeb.FallbackController
 
   def index(conn, _params) do
      sales = Sales.list_sales()
-#    sale = Sales.get_sale!(sale_id)
-    render(conn, "index.json", sales: sales)
-#    render(conn, "sale.json", sale: sale)
+     |> Repo.preload(:customer)
+   render(conn, "index.json", sales: sales)
   end
 
 #  def index(conn, %{"sale_id" => sale_id}) do
