@@ -1,10 +1,13 @@
 defmodule StoresseApi.Cities.City do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Storesse.States
+  alias Storesse.Customers
+  
   schema "cities" do
     field :name, :string
-    field :state_id, :id
+    belongs_to(:state, States.State)
+    has_many(:customers, Customers.Customer)
 
     timestamps()
   end
@@ -12,7 +15,7 @@ defmodule StoresseApi.Cities.City do
   @doc false
   def changeset(city, attrs) do
     city
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :state_id])
+    |> validate_required([:name, :state_id])
   end
 end

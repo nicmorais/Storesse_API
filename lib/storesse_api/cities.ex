@@ -1,4 +1,5 @@
 defmodule StoresseApi.Cities do
+  alias StoresseApi.States.State
   @moduledoc """
   The Cities context.
   """
@@ -19,6 +20,7 @@ defmodule StoresseApi.Cities do
   """
   def list_cities do
     Repo.all(City)
+    |> Repo.preload(:state)
   end
 
   @doc """
@@ -35,8 +37,12 @@ defmodule StoresseApi.Cities do
       ** (Ecto.NoResultsError)
 
   """
-  def get_city!(id), do: Repo.get!(City, id)
-
+   def get_city!(id) do
+     City
+     |> Repo.get!(id)
+     |> Repo.preload(:state)
+   end
+   
   @doc """
   Creates a city.
 

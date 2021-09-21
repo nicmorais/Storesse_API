@@ -1,4 +1,6 @@
 defmodule StoresseApi.States do
+  alias StoresseApi.City
+  
   @moduledoc """
   The States context.
   """
@@ -20,6 +22,7 @@ defmodule StoresseApi.States do
   """
   def list_states do
     Repo.all(State)
+    |> Repo.preload(City)
   end
 
   @doc """
@@ -40,6 +43,7 @@ defmodule StoresseApi.States do
   State
     |> Repo.get!(id)
     |> Repo.preload(:country)
+    |> Repo.preload(:cities)
   end
 
   @doc """

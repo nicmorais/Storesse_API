@@ -11,6 +11,11 @@ defmodule StoresseApiWeb.CustomerController do
     render(conn, "index.json", customers: customers)
   end
 
+  def summary(conn, _params) do
+    customers = Customers.get_summary()
+    render(conn, "customer_summary.json", customers: customers)
+  end
+  
   def create(conn, %{"customer" => customer_params}) do
     with {:ok, %Customer{} = customer} <- Customers.create_customer(customer_params) do
       conn

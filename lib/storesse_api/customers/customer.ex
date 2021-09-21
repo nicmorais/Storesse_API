@@ -23,7 +23,7 @@ defmodule StoresseApi.Customers.Customer do
   @doc false
   def changeset(customer, attrs) do
     customer
-    |> cast(attrs, [:name, :document, :address_line1, :address_line2, :zip_code, :birthdate, :email, :state_id])
+    |> cast(attrs, [:name, :document, :address_line1, :address_line2, :zip_code, :birthdate, :email, :city_id])
     |> validate_required([:name, :document, :address_line1, :address_line2, :zip_code, :birthdate, :email])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:email, min: 5, max: 40)

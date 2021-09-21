@@ -12,6 +12,8 @@ defmodule StoresseApiWeb.CityView do
 
   def render("city.json", %{city: city}) do
     %{id: city.id,
-      name: city.name}
+      name: city.name,
+      state_id: city.state.id
+      }
   end
 end

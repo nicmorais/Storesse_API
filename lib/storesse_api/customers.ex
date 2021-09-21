@@ -47,6 +47,11 @@ defmodule StoresseApi.Customers do
      |> Repo.preload(:sale)
   end
   
+  def get_summary() do
+      Repo.all(Customer)
+      |> Repo.preload(:city)
+  end
+  
   @doc """
   Creates a customer.
 

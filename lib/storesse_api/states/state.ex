@@ -2,11 +2,13 @@ defmodule StoresseApi.States.State do
   use Ecto.Schema
   import Ecto.Changeset
   alias StoresseApi.Countries
-
+  alias StoresseApi.Cities
+  
   schema "states" do
     field :code, :string
     field :name, :string
     belongs_to(:country, Countries.Country)
+    has_many(:cities, Cities.City)
   end
 
   @doc false
