@@ -4,11 +4,25 @@ defmodule StoresseApiWeb.ProductController do
   alias StoresseApi.Products
   alias StoresseApi.Products.Product
 
+  import Ecto.Query
+  alias StoresseApi.Repo
+
   action_fallback StoresseApiWeb.FallbackController
 
   def index(conn, _params) do
-    products = Products.list_products()
+    conn = Plug.Conn.fetch_query_params(conn)
+    params = conn.query_params
+    name = params["name"]
+    if params["name"] == nil do
+      products = from(p in Product)
+      |> Repo.all()
+      render(conn, "index.json", products: products)
+    else
+      name = params["name"] <> "%"
+      products = from(p in Product, where: ilike(p.name, ^name)) 
+      |> Repo.all()
     render(conn, "index.json", products: products)
+    end
   end
 
   def create(conn, %{"product" => product_params}) do

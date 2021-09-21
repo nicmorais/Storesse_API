@@ -18,8 +18,8 @@ defmodule StoresseApiWeb.CustomerController do
       |> Repo.all()
       render(conn, "index.json", customers: customers)
     else
-      name = "%" <> params["name"] <> "%"
-      customers = from(c in Customer, where: like(c.name, ^name)) 
+      name = params["name"] <> "%"
+      customers = from(c in Customer, where: ilike(c.name, ^name)) 
       |> Repo.all()
     render(conn, "index.json", customers: customers)
     end
