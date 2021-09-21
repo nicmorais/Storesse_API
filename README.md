@@ -14,6 +14,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 * Improve authentication system
 * i18n
 * Web GUI
+* Pagination
 
 ## Learn more
 
