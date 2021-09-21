@@ -3,17 +3,26 @@ defmodule StoresseApiWeb.CustomerController do
 
   alias StoresseApi.Customers
   alias StoresseApi.Customers.Customer
-
+  
   action_fallback StoresseApiWeb.FallbackController
 
+  import Ecto.Query
+  alias StoresseApi.Repo
+  
   def index(conn, _params) do
-    customers = Customers.list_customers()
+    conn = Plug.Conn.fetch_query_params(conn)
+    params = conn.query_params
+    name = params["name"]
+    if params["name"] == nil do
+      customers = from(c in Customer)
+      |> Repo.all()
+      render(conn, "index.json", customers: customers)
+    else
+      name = "%" <> params["name"] <> "%"
+      customers = from(c in Customer, where: like(c.name, ^name)) 
+      |> Repo.all()
     render(conn, "index.json", customers: customers)
-  end
-
-  def summary(conn, _params) do
-    customers = Customers.get_summary()
-    render(conn, "customer_summary.json", customers: customers)
+    end
   end
   
   def create(conn, %{"customer" => customer_params}) do
