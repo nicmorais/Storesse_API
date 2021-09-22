@@ -46,8 +46,7 @@ defmodule StoresseApi.MixProject do
       {:guardian, "~> 2.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~> 4.0"},
-      {:poison, "~> 3.1"}
-
+      {:poison, "~> 3.1"},
     ]
   end
 

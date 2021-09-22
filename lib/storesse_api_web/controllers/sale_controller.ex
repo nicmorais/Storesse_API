@@ -7,6 +7,8 @@ defmodule StoresseApiWeb.SaleController do
   alias StoresseApi.Customers.Customer
   
   import Ecto.Query
+  import DateTime
+  import Date
   alias StoresseApi.Repo
   
   action_fallback StoresseApiWeb.FallbackController
@@ -21,13 +23,23 @@ defmodule StoresseApiWeb.SaleController do
       render(conn, "index.json", sales: sales)
     else
     customer_name = params["customer_name"] <> "%"
-      sales = Repo.all(from s in Sale,
+    start_date = params["date"] <> " 00:00:00"
+    end_date = params["date"] <> " 23:59:59"
+      sales = Repo.all(from s in Sale, order_by: s.inserted_at,
          join: c in Customer, on: c.id == s.customer_id,
-         where: ilike(c.name, ^customer_name),
+         where: ilike(c.name, ^customer_name), 
+         where: s.inserted_at >= ^start_date,
+         where: s.inserted_at <= ^end_date,
          limit: 50)
         |> Repo.preload(customer: :sales)
       render(conn, "index.json", sales: sales)
     end
+  end
+
+  defp convert_date(date) do
+  date
+  |> Date.to_erl
+  |> Date.from_erl!
   end
 
   def create(conn, %{"sale" => sale_params}) do
