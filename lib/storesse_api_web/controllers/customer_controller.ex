@@ -13,13 +13,14 @@ defmodule StoresseApiWeb.CustomerController do
     conn = Plug.Conn.fetch_query_params(conn)
     params = conn.query_params
     name = params["name"]
-    if params["name"] == nil do
-      customers = from(c in Customer)
+    
+    if name == nil do
+      customers = from(c in Customer, limit: 50)
       |> Repo.all()
       render(conn, "index.json", customers: customers)
     else
       name = params["name"] <> "%"
-      customers = from(c in Customer, where: ilike(c.name, ^name)) 
+      customers = from(c in Customer, where: ilike(c.name, ^name), limit: 50) 
       |> Repo.all()
     render(conn, "index.json", customers: customers)
     end

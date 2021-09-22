@@ -2,7 +2,7 @@ defmodule StoresseApiWeb.SaleView do
   use StoresseApiWeb, :view
   alias StoresseApiWeb.SaleView
   alias StoresseApiWeb.SaleProductView
-  alias StoresseApiWeb.CustomerView
+  alias StoresseApiWeb.Customers.Customer
   
   def render("index.json", %{sales: sales}) do
     %{data: render_many(sales, SaleView, "sale.json")}

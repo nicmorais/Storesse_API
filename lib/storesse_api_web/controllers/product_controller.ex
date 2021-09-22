@@ -14,12 +14,12 @@ defmodule StoresseApiWeb.ProductController do
     params = conn.query_params
     name = params["name"]
     if params["name"] == nil do
-      products = from(p in Product)
+      products = from(p in Product, limit: 50)
       |> Repo.all()
       render(conn, "index.json", products: products)
     else
       name = params["name"] <> "%"
-      products = from(p in Product, where: ilike(p.name, ^name)) 
+      products = from(p in Product, where: ilike(p.name, ^name), limit: 50) 
       |> Repo.all()
     render(conn, "index.json", products: products)
     end
