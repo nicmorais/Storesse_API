@@ -17,22 +17,45 @@ defmodule StoresseApiWeb.SaleController do
     conn = Plug.Conn.fetch_query_params(conn)
     params = conn.query_params
     
-    if params["customer_name"] == nil do
-      sales = Repo.all(from(s in Sale, limit: 50)) 
-      |> Repo.preload(:customer)
-      render(conn, "index.json", sales: sales)
-    else
-    customer_name = params["customer_name"] <> "%"
-    start_date = params["date"] <> " 00:00:00"
-    end_date = params["date"] <> " 23:59:59"
-      sales = Repo.all(from s in Sale, order_by: s.inserted_at,
-         join: c in Customer, on: c.id == s.customer_id,
-         where: ilike(c.name, ^customer_name), 
-         where: s.inserted_at >= ^start_date,
-         where: s.inserted_at <= ^end_date,
-         limit: 50)
-        |> Repo.preload(customer: :sales)
-      render(conn, "index.json", sales: sales)
+    cond do
+      params["customer_name"] == nil and params["date"] == nil ->
+        sales = Repo.all(from(s in Sale, limit: 50)) 
+        |> Repo.preload(:customer)
+        render(conn, "index.json", sales: sales)
+
+      params["customer_name"] != nil and params["date"] != nil ->
+        customer_name = params["customer_name"] <> "%"
+        start_date = params["date"] <> " 00:00:00"
+        end_date = params["date"] <> " 23:59:59"
+        sales = Repo.all(from s in Sale, order_by: s.inserted_at,
+          join: c in Customer, on: c.id == s.customer_id,
+          where: ilike(c.name, ^customer_name), 
+          where: s.inserted_at >= ^start_date,
+          where: s.inserted_at <= ^end_date,
+          limit: 50)
+          |> Repo.preload(customer: :sales)
+        render(conn, "index.json", sales: sales)
+
+      params["customer_name"] == nil and params["date"] != nil ->
+        start_date = params["date"] <> " 00:00:00"
+        end_date = params["date"] <> " 23:59:59"
+        sales = Repo.all(from s in Sale, order_by: s.inserted_at,
+          join: c in Customer, on: c.id == s.customer_id,
+          where: s.inserted_at >= ^start_date,
+          where: s.inserted_at <= ^end_date,
+          limit: 50)
+          |> Repo.preload(customer: :sales)
+        render(conn, "index.json", sales: sales)
+
+      params["customer_name"] != nil and params["date"] == nil ->
+        customer_name = params["customer_name"] <> "%"
+        sales = Repo.all(from s in Sale, order_by: s.inserted_at,
+          join: c in Customer, on: c.id == s.customer_id,
+          where: ilike(c.name, ^customer_name), 
+          limit: 50)
+          |> Repo.preload(customer: :sales)
+        render(conn, "index.json", sales: sales)
+
     end
   end
 
