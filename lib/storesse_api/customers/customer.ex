@@ -3,6 +3,7 @@ defmodule StoresseApi.Customers.Customer do
   import Ecto.Changeset
   alias StoresseApi.Cities.City
   alias StoresseApi.Sales.Sale
+  alias StoresseApi.States.State
   
   schema "customers" do
     field :address_line1, :string
@@ -30,6 +31,7 @@ defmodule StoresseApi.Customers.Customer do
     |> validate_length(:name, min: 4, max: 50)
     |> validate_format(:name, ~r/ /)
     |> validate_length(:zip_code, min: 4, max: 16)
-    |> assoc_constraint(:state)
+    |> assoc_constraint(:city)
+    |> cast_assoc(:sale)
   end
 end

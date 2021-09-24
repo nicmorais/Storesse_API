@@ -3,8 +3,8 @@ defmodule StoresseApi.Repo.Migrations.CreateStates do
 
   def change do
     create table(:states) do
-      add :name, :string
-      add :code, :string
+      add :name, :string, size: 52, null: false
+      add :code, :string, size: 6
       add :country_id, references(:countries, on_delete: :delete_all)
       
       timestamps()

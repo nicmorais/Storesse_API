@@ -3,6 +3,8 @@ defmodule StoresseApiWeb.CustomerController do
 
   alias StoresseApi.Customers
   alias StoresseApi.Customers.Customer
+  alias StoresseApi.Cities.City
+  alias StoresseApi.States.State
   
   action_fallback StoresseApiWeb.FallbackController
 
@@ -36,7 +38,9 @@ defmodule StoresseApiWeb.CustomerController do
   end
 
   def show(conn, %{"id" => id}) do
+  
     customer = Customers.get_customer!(id)
+    |> Repo.preload(:city)
     render(conn, "show.json", customer: customer)
   end
 
@@ -55,4 +59,12 @@ defmodule StoresseApiWeb.CustomerController do
       send_resp(conn, :no_content, "")
     end
   end
+  
+    def signin(conn, %{"email" => email, "password" => password}) do
+  with {:ok, user, token} <- Guardian.authenticate(email, password) do
+    conn
+    |> put_status(:created)
+    |> render("user.json", %{user: user, token: token})
+  end
+ end
 end

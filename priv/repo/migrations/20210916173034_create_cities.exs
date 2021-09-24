@@ -3,7 +3,7 @@ defmodule StoresseApi.Repo.Migrations.CreateCities do
 
   def change do
     create table(:cities) do
-      add :name, :string
+      add :name, :string, size: 59
       add :state_id, references(:states, on_delete: :nothing)
 
       timestamps()

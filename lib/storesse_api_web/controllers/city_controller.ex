@@ -3,11 +3,16 @@ defmodule StoresseApiWeb.CityController do
 
   alias StoresseApi.Cities
   alias StoresseApi.Cities.City
-
+  alias StoresseApi.States.State
+  
   action_fallback StoresseApiWeb.FallbackController
-
-  def index(conn, _params) do
-    cities = Cities.list_cities()
+  alias StoresseApi.Repo
+  import Ecto.Query
+  
+  def index(conn, %{"state_id" => state_id}) do
+    cities = from(c in City, where: c.state_id == ^state_id)
+    |> Repo.all()
+    
     render(conn, "index.json", cities: cities)
   end
 

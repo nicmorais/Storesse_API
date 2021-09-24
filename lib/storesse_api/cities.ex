@@ -8,6 +8,7 @@ defmodule StoresseApi.Cities do
   alias StoresseApi.Repo
 
   alias StoresseApi.Cities.City
+  alias StoresseApi.States
 
   @doc """
   Returns the list of cities.
@@ -40,7 +41,6 @@ defmodule StoresseApi.Cities do
    def get_city!(id) do
      City
      |> Repo.get!(id)
-     |> Repo.preload(:state)
    end
    
   @doc """

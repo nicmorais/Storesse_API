@@ -13,6 +13,8 @@ defmodule StoresseApiWeb.StateView do
   def render("state.json", %{state: state}) do
     %{id: state.id,
       name: state.name,
-      code: state.code}
+      code: state.code,
+      country_id: state.country.id
+      }
   end
 end

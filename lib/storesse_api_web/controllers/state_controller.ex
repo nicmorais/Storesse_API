@@ -5,9 +5,13 @@ defmodule StoresseApiWeb.StateController do
   alias StoresseApi.States.State
 
   action_fallback StoresseApiWeb.FallbackController
+  alias StoresseApi.Repo
+  import Ecto.Query
 
-  def index(conn, _params) do
-    states = States.list_states()
+  def index(conn, %{"country_id" => country_id}) do
+    states = from(s in State, where: s.country_id == ^country_id)
+    |> Repo.all()
+    |> Repo.preload(:country)
     render(conn, "index.json", states: states)
   end
 

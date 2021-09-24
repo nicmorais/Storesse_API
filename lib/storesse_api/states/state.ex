@@ -1,14 +1,14 @@
 defmodule StoresseApi.States.State do
   use Ecto.Schema
   import Ecto.Changeset
-  alias StoresseApi.Countries
-  alias StoresseApi.Cities
+  alias StoresseApi.Countries.Country
+  alias StoresseApi.Cities.City
   
   schema "states" do
     field :code, :string
     field :name, :string
-    belongs_to(:country, Countries.Country)
-    has_many(:cities, Cities.City)
+    belongs_to(:country, Country)
+    has_many(:cities, City)
   end
 
   @doc false
@@ -17,5 +17,6 @@ defmodule StoresseApi.States.State do
     |> cast(attrs, [:name, :code, :country_id])
     |> validate_required([:name, :code])
     |> assoc_constraint(:country)
+    |> cast_assoc(:city)
   end
 end

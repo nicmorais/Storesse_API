@@ -58,13 +58,7 @@ defmodule StoresseApiWeb.SaleController do
 
     end
   end
-
-  defp convert_date(date) do
-  date
-  |> Date.to_erl
-  |> Date.from_erl!
-  end
-
+  
   def create(conn, %{"sale" => sale_params}) do
     with {:ok, %Sale{} = sale} <- Sales.create_sale(sale_params) do
       conn

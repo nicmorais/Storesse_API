@@ -1,4 +1,5 @@
 defmodule StoresseApi.Customers do
+
   @moduledoc """
   The Customers context.
   """

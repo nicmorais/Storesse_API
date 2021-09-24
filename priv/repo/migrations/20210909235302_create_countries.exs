@@ -3,8 +3,8 @@ defmodule StoresseApi.Repo.Migrations.CreateCountries do
 
   def change do
     create table(:countries) do
-      add :name, :string, length: 45, null: false
-      add :code, :string, length: 2, null: false
+      add :name, :string, size: 45, null: false
+      add :code, :string, size: 2, null: false
       
       timestamps()
     end

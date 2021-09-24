@@ -3,10 +3,11 @@ defmodule StoresseApi.Cities.City do
   import Ecto.Changeset
   alias Storesse.States
   alias Storesse.Customers
+  alias Storesse.States.State
   
   schema "cities" do
     field :name, :string
-    belongs_to(:state, States.State)
+    belongs_to(:state, State)
     has_many(:customers, Customers.Customer)
 
     timestamps()
@@ -17,5 +18,7 @@ defmodule StoresseApi.Cities.City do
     city
     |> cast(attrs, [:name, :state_id])
     |> validate_required([:name, :state_id])
+    |> assoc_constraint(:state)
+    |> cast_assoc(:customer)
   end
 end

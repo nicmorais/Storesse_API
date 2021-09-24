@@ -25,6 +25,10 @@ defmodule StoresseApiWeb.Router do
     
     resources "/products", ProductController, except: [:new, :edit]
     
+    resources "/countries", CountryController, only: [:show]
+    resources "/states", StateController, only: [:show]
+    resources "/cities", CityController, only: [:show]
+    
     resources "/countries", CountryController, except: [:new, :edit] do
       resources "/states", StateController, except: [:new, :edit] do
         resources "/cities", CityController, except: [:new, :edit]
